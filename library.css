@@ -13,12 +13,29 @@ body {
     height: 100%;
 }
 
+header {
+    display: flex;
+    justify-content: center;
+}
+
 header h1 {
-    width: 50%;
-    margin: 20px auto;
-    text-align: center;
     font-size: 2em;
     font-weight: 700;
+    margin: 10px;
+}
+
+#add-book-btn {
+    position: fixed;
+    top: 0;
+    right: 0;
+    border: 1px solid black;
+    font-size: 1.2em;
+    margin: 15px;
+    
+}
+
+#add-book-btn:active {
+    background-color: lightgray;
 }
 
 #shelf {
@@ -41,6 +58,20 @@ header h1 {
     justify-content: space-around;
 }
 
-#shelf .card p {
+#shelf .card .title {
+    font-size: 1.2em;
+    font-weight: 700;
+}
 
+#shelf .card .author {
+}
+
+#shelf .card .finished {
+    color: darkgreen;
+    font-style: italic;
+}
+
+#shelf .card .unfinished {
+    color: darkred;
+    font-style: italic;
 }

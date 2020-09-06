@@ -1,4 +1,5 @@
-let theLibrary = [];
+
+const theLibrary = [];
 
 // constructor
 function Book(title, author, pages, didRead) {
@@ -25,16 +26,28 @@ function printLibrary() {
 function appendBookCard(book) {
     let bookCard = document.createElement('div');
     bookCard.className = 'card';
-    addDetailToCard(book.title, bookCard);
-    addDetailToCard(book.author, bookCard);
-    addDetailToCard(book.pages + ' pages', bookCard);
-    addDetailToCard(book.didRead ? 'finished' : 'unfinished', bookCard);
+    let bookDetails = ['title', 'author', 'pages', 'didRead']
+    for (let i = 0 ; i < bookDetails.length; i++) {
+        addDetailToCard(book, bookDetails[i], bookCard);
+    }
     shelf.appendChild(bookCard);
 }
 
-function addDetailToCard(detail, card) {
+function addDetailToCard(book, detailType, card) {
     let p = document.createElement('p');
-    p.textContent = detail;
+
+    if (detailType == 'pages') {
+        p.className = detailType;
+        p.textContent = book[detailType] + ' pages';
+    }
+    else if (detailType == 'didRead') {
+        p.className = p.textContent = book[detailType] ? 'finished' : 'unfinished';
+    }
+    else {
+        p.className = detailType;
+        p.textContent = book[detailType];
+    }
+
     card.appendChild(p);
 }
 
@@ -56,3 +69,5 @@ addBookToLibrary(theWitcher);
 theLibrary.forEach(book => {
     appendBookCard(book);
 });
+
+console.log(theWitcher['title']);
