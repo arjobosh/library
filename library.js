@@ -13,8 +13,8 @@ Book.prototype.info = function() {
     return this.title + ' by ' + this.author + ', ' + this.pages + ' pages, ' + (this.didRead ? 'read' : 'not read');
 }
 
-function addBookToLibrary(title) {
-    return theLibrary.push(title);
+function addBookToLibrary(book) {
+    return theLibrary.push(book);
 }
 
 function printLibrary() {
@@ -51,23 +51,28 @@ function addDetailToCard(book, detailType, card) {
     card.appendChild(p);
 }
 
-const shelf = document.getElementById('shelf');
+function addBookButton() {
+    let x = document.getElementById('add-book-form');
+    let info = [];
 
-let theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-let theWitcher = new Book('The Last Wish', 'Andrzej Sapkowski', 288, true);
+    for (let i = 0; i < x.length; i++) {
+        if (x[i].type === 'text') {
+            info.push(x[i].value);
+        }
+    }
 
+    if (!info.includes('')) {
+        let b = new Book(info[0], info[1], info[2], info[3]);
+        addBookToLibrary(b);
+        appendBookCard(b);
+    }
+    else {
+        console.log('at least one of the fields is empty');
+    }
 
-addBookToLibrary(theHobbit);
-addBookToLibrary(theWitcher);
-addBookToLibrary(theHobbit);
-addBookToLibrary(theWitcher);
-addBookToLibrary(theHobbit);
-addBookToLibrary(theWitcher);
-addBookToLibrary(theHobbit);
-addBookToLibrary(theWitcher);
+    document.getElementById('book-form').style.display = 'none';
+}
 
-theLibrary.forEach(book => {
-    appendBookCard(book);
-});
-
-console.log(theWitcher['title']);
+function openBookForm() {
+    document.getElementById('book-form').style.display = 'block';
+}

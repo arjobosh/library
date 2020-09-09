@@ -9,12 +9,34 @@
 <body>
 
     <header>
-        <h1>your library</h1>
-        <input type="button" id="add-book-btn" value="add book">
+        <div id="nav-container">
+            <h1>your library</h1>
+            <input onclick="openBookForm()" type="button" id="add-btn" value="add book">
+        </div>
+
+        <div id="book-form" class="form-popup">    
+            <form action="" id="add-book-form" class="form-container">    
+              <label for="title"><b>title</b></label>
+              <input type="text" placeholder="enter title" name="title" required>
+    
+              <label for="author"><b>author</b></label>
+              <input type="text" placeholder="enter author" name="author" required>
+
+              <label for="pages"><b>number of pages</b></label>
+              <input type="text" placeholder="enter number of pages" name="pages" required>
+    
+              <label for="didRead"><b>completed?</b></label>
+              <input type="text" placeholder="enter yes or no" name="didRead" required>
+
+              <input onclick="addBookButton()" type="button" id="done-btn" value="done">
+            </form>
+        </div>    
     </header>
     
     <div id="shelf"></div>
     
+    
 </body>
     <script src="library.js"></script>
+    <script src="main.js"></script>
 </html>
