@@ -16,19 +16,24 @@
 
         <div id="book-form" class="form-popup">    
             <form action="" id="add-book-form" class="form-container">    
-              <label for="title"><b>title</b></label>
-              <input type="text" placeholder="enter title" name="title" required>
-    
-              <label for="author"><b>author</b></label>
-              <input type="text" placeholder="enter author" name="author" required>
+                <label for="title"><b>title</b></label>
+                <input type="text" class="textbox" placeholder="enter title" name="title" required>
+        
+                <label for="author"><b>author</b></label>
+                <input type="text" class="textbox" placeholder="enter author" name="author" required>
 
-              <label for="pages"><b>number of pages</b></label>
-              <input type="text" placeholder="enter number of pages" name="pages" required>
-    
-              <label for="didRead"><b>completed?</b></label>
-              <input type="text" placeholder="enter yes or no" name="didRead" required>
-
-              <input onclick="addBookButton()" type="button" id="done-btn" value="done">
+                <label for="pages"><b>number of pages</b></label>
+                <input type="text" class="textbox" placeholder="enter number of pages" name="pages" required>
+        
+                <label for="didRead"><b>completed?</b></label>
+              
+                <div>
+                    <input type="radio" id="yes" name="didRead" value="yes" required>
+                    <label for="yes"><b>yes</b></label>
+                    <input type="radio" id="no" name="didRead" value="no" required>
+                    <label for="no"><b>no</b></label>
+                </div>
+                <input onclick="addBookButton()" type="button" id="done-btn" value="done">
             </form>
         </div>    
     </header>

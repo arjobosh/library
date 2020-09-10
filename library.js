@@ -38,14 +38,14 @@ function addDetailToCard(book, detailType, card) {
 
     if (detailType == 'pages') {
         p.className = detailType;
-        p.textContent = book[detailType] + ' pages';
+        p.innerHTML = book[detailType] + ' pages';
     }
     else if (detailType == 'didRead') {
-        p.className = p.textContent = book[detailType] ? 'finished' : 'unfinished';
+        p.className = p.innerHTML = book[detailType] ? 'finished' : 'unfinished';
     }
     else {
         p.className = detailType;
-        p.textContent = book[detailType];
+        p.innerHTML = book[detailType];
     }
 
     card.appendChild(p);
@@ -56,8 +56,15 @@ function addBookButton() {
     let info = [];
 
     for (let i = 0; i < x.length; i++) {
+        
         if (x[i].type === 'text') {
             info.push(x[i].value);
+        }
+        else if (x[i].type === 'radio' && x[i].checked) {
+            info.push(x[i].value === 'yes' ? true : false);
+        }
+        else {
+            console.log('no input was given');
         }
     }
 
@@ -65,14 +72,18 @@ function addBookButton() {
         let b = new Book(info[0], info[1], info[2], info[3]);
         addBookToLibrary(b);
         appendBookCard(b);
+        //console.log(b);
     }
     else {
         console.log('at least one of the fields is empty');
     }
 
     document.getElementById('book-form').style.display = 'none';
+    document.getElementById('add-btn').style.display = 'block';
+    
 }
 
 function openBookForm() {
     document.getElementById('book-form').style.display = 'block';
+    document.getElementById('add-btn').style.display = 'none';
 }

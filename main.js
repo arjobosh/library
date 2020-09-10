@@ -14,4 +14,6 @@ addBookToLibrary(theWitcher);
 
 theLibrary.forEach(book => {
     appendBookCard(book);
+    //console.log(book);
 });
+
