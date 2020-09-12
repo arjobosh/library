@@ -5,15 +5,15 @@ const theLibrary = [];
 const shelf = document.getElementById('shelf');
 
 // book constructor
-function Book(title, author, pages, didRead) {
+function Book(title, author, pages, readStatus) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.didRead = didRead;
+    this.readStatus = readStatus;
 }
 
 Book.prototype.info = function() {
-    return this.title + ' by ' + this.author + ', ' + this.pages + ' pages, ' + (this.didRead ? 'read' : 'not read');
+    return this.title + ' by ' + this.author + ', ' + this.pages + ' pages, ' + (this.readStatus ? 'read' : 'not read');
 }
 
 Book.prototype.createBookCard = function() {
@@ -32,10 +32,6 @@ Book.prototype.createBookCard = function() {
     this.bookCard = card;
 }
 
-Book.prototype.changeCardInfo = function(property, card) {
-
-}
-
 Book.prototype.addInfoToCard = function(property, card) {
     let p = document.createElement('p');
 
@@ -43,9 +39,17 @@ Book.prototype.addInfoToCard = function(property, card) {
         p.className = property;
         p.innerHTML = this[property] + ' pages';
     }
-    else if (property === 'didRead') {
+    else if (property === 'readStatus') {
         p.className = 'readStatus';
-        p.innerHTML = this[property] ? 'finished' : 'unfinished';
+         
+        if (this[property]) {
+            p.style.color = 'green';
+            p.innerHTML = 'finished';
+        }
+        else {
+            p.style.color = 'red';
+            p.innerHTML = 'unfinished'
+        }
     }
     else {
         p.className = property;
@@ -62,39 +66,51 @@ Book.prototype.removeBookFromLibrary = function() {
 Book.prototype.createBtn = function (btnValue) {
     let btn = document.createElement('input');
     let thisBook = this;
+    
     btn.type = 'button';
     btn.value = btnValue;
     btn.className = 'book-card-btn';
 
     btn.addEventListener('click', function() {
         if (btn.value === 'remove') {
-            let bookIndex = theLibrary.indexOf(thisBook);
-            let bookNode = document.querySelector(`[data-index='${bookIndex}']`)
+            let bookIndex = thisBook.bookCard.getAttribute('data-index');
+            let bookNode = document.querySelector(`.card[data-index='${bookIndex}']`);
+            
             document.querySelector('.card').parentNode.removeChild(bookNode);
-            theLibrary.splice(bookIndex, 1);
+            
+            theLibrary.splice(theLibrary.indexOf(thisBook), 1);
         }
         else if (btn.value === 'toggle') {
             thisBook.toggleReadStatus();
             thisBook.setReadStatusText();
         }
         else {
-            console.log('no function for button value');
+            console.error('no function for input type');
         }
+
+        console.log(theLibrary);
     });
 
     return btn;
 }
 
 Book.prototype.toggleReadStatus = function() {
-    this.didRead = !this.didRead;
+    this.readStatus = !this.readStatus;
 }
 
 Book.prototype.setReadStatusText = function () {
-    this.bookCard.querySelector('p.readStatus').innerHTML = this.getReadStatus() ? 'finished' : 'unfinished';
+    if (this.getReadStatus()) {
+        this.bookCard.querySelector('p.readStatus').style.color = 'green';
+        this.bookCard.querySelector('p.readStatus').innerHTML = 'finished'
+    }
+    else {
+        this.bookCard.querySelector('p.readStatus').style.color = 'red';
+        this.bookCard.querySelector('p.readStatus').innerHTML = 'unfinished';
+    }
 }
 
 Book.prototype.getReadStatus = function() {
-    return this.didRead;
+    return this.readStatus;
 }
 
 Book.prototype.getBookCard = function() {
@@ -111,7 +127,7 @@ Book.prototype.addToLibrary = function() {
         this.createBookCard();
     }
     else {
-        'this book is already in the library!';
+        console.error('this book is already in the library!');
     }
 
     return this;
@@ -139,7 +155,7 @@ function addBookButton() {
             info.push(x[i].value === 'yes' ? true : false);
         }
         else {
-            //console.log('no input was given');
+            //console.error('no input was given');
         }
     }
 
@@ -147,9 +163,9 @@ function addBookButton() {
         let b = new Book(info[0], info[1], info[2], info[3]);
         console.log(b.addToLibrary());
     }
-    /*else {
-        console.log('at least one of the fields is empty');
-    }*/
+    else {
+        //console.error('at least one of the fields is empty');
+    }
 
     document.getElementById('book-form').style.display = 'none';
     document.getElementById('add-btn').style.display = 'block';
@@ -158,5 +174,5 @@ function addBookButton() {
 function openBookForm() {
     document.getElementById('book-form').style.display = 'block';
     document.getElementById('add-btn').style.display = 'none';
-    document.getElementById('add-book-form').reset();
+    //document.getElementById('add-book-form').reset();
 }
