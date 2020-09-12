@@ -98,20 +98,11 @@ header #add-btn {
     font-weight: 700;
 }
 
-#shelf .card .author {
-}
-
-#shelf .card .finished {
-    color: darkgreen;
+#shelf .card .readStatus {
     font-style: italic;
 }
 
-#shelf .card .unfinished {
-    color: darkred;
-    font-style: italic;
-}
-
-#shelf .remove-book-btn {
+#shelf .card .book-card-btn {
     width: 40%;
     align-self: center;
 }

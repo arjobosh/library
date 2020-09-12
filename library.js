@@ -26,20 +26,26 @@ Book.prototype.createBookCard = function() {
         this.addInfoToCard(x[i], card);
     }
 
-    card.appendChild(this.createRemoveBtn());
+    card.appendChild(this.createBtn('remove'));
+    card.appendChild(this.createBtn('toggle'));
     shelf.appendChild(card);
     this.bookCard = card;
+}
+
+Book.prototype.changeCardInfo = function(property, card) {
+
 }
 
 Book.prototype.addInfoToCard = function(property, card) {
     let p = document.createElement('p');
 
-    if (property == 'pages') {
+    if (property === 'pages') {
         p.className = property;
         p.innerHTML = this[property] + ' pages';
     }
-    else if (property == 'didRead') {
-        p.className = p.innerHTML = this[property] ? 'finished' : 'unfinished';
+    else if (property === 'didRead') {
+        p.className = 'readStatus';
+        p.innerHTML = this[property] ? 'finished' : 'unfinished';
     }
     else {
         p.className = property;
@@ -53,21 +59,42 @@ Book.prototype.removeBookFromLibrary = function() {
     return theLibrary.splice(theLibrary.indexOf(this), 1);
 }
 
-Book.prototype.createRemoveBtn = function() {
-    let rm = document.createElement('input');
-    rm.type = 'button';
-    rm.value = 'remove';
-    rm.className = 'remove-book-btn';
+Book.prototype.createBtn = function (btnValue) {
+    let btn = document.createElement('input');
     let thisBook = this;
-    rm.addEventListener('click', function() {
-        let bookIndex = theLibrary.indexOf(thisBook);
-        let bookNode = document.querySelector(`[data-index="${bookIndex}"]`)
-        document.querySelector('.card').parentNode.removeChild(bookNode);
-        theLibrary.splice(bookIndex, 1);
-        //console.log(theLibrary);
+    btn.type = 'button';
+    btn.value = btnValue;
+    btn.className = 'book-card-btn';
+
+    btn.addEventListener('click', function() {
+        if (btn.value === 'remove') {
+            let bookIndex = theLibrary.indexOf(thisBook);
+            let bookNode = document.querySelector(`[data-index='${bookIndex}']`)
+            document.querySelector('.card').parentNode.removeChild(bookNode);
+            theLibrary.splice(bookIndex, 1);
+        }
+        else if (btn.value === 'toggle') {
+            thisBook.toggleReadStatus();
+            thisBook.setReadStatusText();
+        }
+        else {
+            console.log('no function for button value');
+        }
     });
-    
-    return rm;
+
+    return btn;
+}
+
+Book.prototype.toggleReadStatus = function() {
+    this.didRead = !this.didRead;
+}
+
+Book.prototype.setReadStatusText = function () {
+    this.bookCard.querySelector('p.readStatus').innerHTML = this.getReadStatus() ? 'finished' : 'unfinished';
+}
+
+Book.prototype.getReadStatus = function() {
+    return this.didRead;
 }
 
 Book.prototype.getBookCard = function() {
