@@ -110,3 +110,8 @@ header #add-btn {
     color: darkred;
     font-style: italic;
 }
+
+#shelf .remove-book-btn {
+    width: 40%;
+    align-self: center;
+}
