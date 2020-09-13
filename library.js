@@ -26,8 +26,9 @@ Book.prototype.createBookCard = function() {
         this.addInfoToCard(x[i], card);
     }
 
-    card.appendChild(this.createBtn('remove'));
     card.appendChild(this.createBtn('toggle'));
+    card.appendChild(this.createBtn('remove'));
+
     shelf.appendChild(card);
     this.bookCard = card;
 }
@@ -44,11 +45,11 @@ Book.prototype.addInfoToCard = function(property, card) {
          
         if (this[property]) {
             p.style.color = 'green';
-            p.innerHTML = 'finished';
+            p.innerHTML = 'completed';
         }
         else {
             p.style.color = 'red';
-            p.innerHTML = 'unfinished'
+            p.innerHTML = 'uncompleted'
         }
     }
     else {
@@ -101,11 +102,11 @@ Book.prototype.toggleReadStatus = function() {
 Book.prototype.setReadStatusText = function () {
     if (this.getReadStatus()) {
         this.bookCard.querySelector('p.readStatus').style.color = 'green';
-        this.bookCard.querySelector('p.readStatus').innerHTML = 'finished'
+        this.bookCard.querySelector('p.readStatus').innerHTML = 'completed'
     }
     else {
         this.bookCard.querySelector('p.readStatus').style.color = 'red';
-        this.bookCard.querySelector('p.readStatus').innerHTML = 'unfinished';
+        this.bookCard.querySelector('p.readStatus').innerHTML = 'uncompleted';
     }
 }
 

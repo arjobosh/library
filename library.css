@@ -15,51 +15,60 @@ body {
 
 #nav-container {
     display: flex;
-    justify-content: left;
-    position: relative;
+    justify-content: space-between;
     width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
+    /*max-width: 1100px;*/
 }
 
 #nav-container h1 {
     font-size: 2em;
     font-weight: 700;
-    margin: 10px;
+    margin: auto 5%;
 }
 
-#nav-container input {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
+
 
 #book-form {
     display: none;
     position: fixed;
-    top: 0;
+    top: 10vh;
     right: 0;
-    margin: 5px;
+    margin: 0 10px;
     z-index: 1;
-    background-color: rgba(230, 230, 230, 0.5);
-    text-align: right;
-    max-width: 150px;
+    background-color: lightblue;
+    /* text-align: right; */
+    width: 200px;
+    height: 300px;
+    border: 1px solid black;
+    border-top: none;
 }
 
 #add-book-form > * {
     display: block;
-    margin: 5px 0;
+    margin: 10px;
 }
 
 #add-book-form .textbox {
-    text-align: right;
-    width: 100%;
+    /* text-align: right; */
+    width: 75%;
 }
 
-header #add-btn {
-    position: absolute;
-    top: 15px;
-    right: 10px;
+header {
+    position: fixed;
+    background-color: lightblue;
+    display: flex;
+    z-index: 1;
+    width: 1100px;
+    height: 10vh;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-bottom: 1px solid black;
+}
+
+
+#add-btn {
+    margin: auto 5%;
 }
 
 #add-btn, #done-btn {
@@ -73,12 +82,17 @@ header #add-btn {
     background-color: lightgray;
 }
 
+
+/* shelf */
 #shelf {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    max-width: 1100px;
-    margin: 0 auto;
+    width: 1100px;
+    /* max-width: 1100px; */
+    margin: 10vh auto;
+    background-color: #ddd;
+    min-height: 110vh;
 }
 
 #shelf .card {
