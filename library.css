@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-html, body, p, header,
+html, body, p, header, span
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
@@ -13,20 +13,19 @@ body {
     height: 100%;
 }
 
-#nav-container {
+.nav-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    /*max-width: 1100px;*/
 }
 
-#nav-container h1 {
+.nav-container h1 {
     font-size: 2em;
     font-weight: 700;
     margin: auto 5%;
 }
 
-#book-form {
+#book-form-container {
     display: none;
     position: fixed;
     top: 10vh;
@@ -40,12 +39,12 @@ body {
     border-top: none;
 }
 
-#add-book-form > * {
+.add-book-form > * {
     display: block;
     margin: 5px;
 }
 
-#add-book-form .textbox {
+.add-book-form .textbox {
     width: 75%;
 }
 
@@ -62,19 +61,18 @@ header {
     border-bottom: 1px solid black;
 }
 
-
 #add-btn {
     margin: auto 5%;
 }
 
-#add-btn, #done-btn {
+.form-btn {
     border: 1px solid black;
     font-size: 1.2em;
     text-align: center;
-    float: right
+    float: right;
 }
 
-#add-btn:active, #book-btn:active {
+.form-btn:active {
     background-color: lightgray;
 }
 
@@ -86,9 +84,9 @@ header {
     justify-content: flex-start;
     width: 1100px;
     /* max-width: 1100px; */
+    min-height: 110vh;
     margin: 10vh auto;
     background-color: #ddd;
-    min-height: 110vh;
 }
 
 #shelf .card {
@@ -102,6 +100,7 @@ header {
     flex-flow: column wrap;
     justify-content: space-around;
     box-shadow: 5px 5px whitesmoke;
+    
 }
 
 #shelf .card .title {
@@ -109,16 +108,20 @@ header {
     font-weight: 700;
 }
 
-#shelf .card .readStatus {
-    font-style: italic;
-}
-
 #shelf .card .book-card {
     width: 40%;
     align-self: center;
 }
 
+.readStatus {
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .btn {
     border-radius: 7px;
     box-shadow: 2px 2px #333;
+    background-color: whitesmoke;
 }

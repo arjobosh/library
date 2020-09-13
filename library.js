@@ -26,8 +26,7 @@ Book.prototype.createBookCard = function() {
         this.addInfoToCard(x[i], card);
     }
 
-    card.querySelector('p.readStatus').appendChild(this.createBtn('toggle'));
-    //card.appendChild(this.createBtn('toggle'));
+    card.querySelector('span.readStatus').appendChild(this.createBtn('toggle'));
     card.appendChild(this.createBtn('remove'));
     
     shelf.appendChild(card);
@@ -35,33 +34,30 @@ Book.prototype.createBookCard = function() {
 }
 
 Book.prototype.addInfoToCard = function(property, card) {
-    let p = document.createElement('p');
+    let detail = document.createElement('span');
 
     if (property === 'pages') {
-        p.className = property;
-        p.innerHTML = this[property] + ' pages';
+        detail.className = property;
+        detail.innerHTML = this[property] + ' pages';
     }
     else if (property === 'readStatus') {
-        p.className = 'readStatus';
-        p.style.display = 'flex';
-        p.style.alignItems = 'center';
-        p.style.justifyContent = 'center';
+        detail.className = 'readStatus';
         
         if (this[property]) {
-            p.style.color = 'darkgreen';
-            p.innerHTML = 'completed';
+            detail.style.color = 'darkgreen';
+            detail.innerHTML = 'completed';
         }
         else {
-            p.style.color = 'darkred';
-            p.innerHTML = 'uncompleted'
+            detail.style.color = 'darkred';
+            detail.innerHTML = 'uncompleted'
         }
     }
     else {
-        p.className = property;
-        p.innerHTML = this[property];
+        detail.className = property;
+        detail.innerHTML = this[property];
     }
 
-    return card.appendChild(p);
+    return card.appendChild(detail);
 }
 
 Book.prototype.createBtn = function (btnValue) {
@@ -71,6 +67,7 @@ Book.prototype.createBtn = function (btnValue) {
     if (btnValue === 'toggle') {
         btn.value = '';
         btn.style.width = '20px';
+        btn.style.borderRadius = '50%';
     }
     else if (btnValue === 'remove') {
         btn.value = btnValue;
@@ -114,7 +111,7 @@ Book.prototype.toggleReadStatus = function() {
 }
 
 Book.prototype.setReadStatusText = function () {
-    let readStatusNode = this.bookCard.querySelector('p.readStatus');
+    let readStatusNode = this.bookCard.querySelector('span.readStatus');
 
     if (this.getReadStatus()) {
         readStatusNode.style.color = 'darkgreen';
@@ -166,7 +163,7 @@ function printLibrary() {
 // DOM manipulation functions
 
 function addBookButton() {
-    let x = document.getElementById('add-book-form');
+    let x = document.querySelector('.add-book-form');
     let info = [];
 
     for (let i = 0; i < x.length; i++) {
@@ -190,12 +187,12 @@ function addBookButton() {
         //console.error('at least one of the fields is empty');
     }
 
-    document.getElementById('book-form').style.display = 'none';
+    document.getElementById('book-form-container').style.display = 'none';
     document.getElementById('add-btn').style.display = 'block';
 }
 
 function openBookForm() {
-    document.getElementById('book-form').style.display = 'block';
+    document.getElementById('book-form-container').style.display = 'block';
     document.getElementById('add-btn').style.display = 'none';
-    document.getElementById('add-book-form').reset();
+    document.querySelector('.add-book-form').reset();
 }
