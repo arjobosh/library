@@ -15,17 +15,17 @@
         </div>
 
         <div id="book-form-container">
-            <form action="" class="add-book-form">    
+            <form class="add-book-form">    
                 <label for="title"><b>title</b></label>
-                <input type="text" class="textbox" placeholder="enter title" name="title" required>
+                <input type="text" class="textbox" placeholder="enter title" id="title" name="title" required>
         
                 <label for="author"><b>author</b></label>
-                <input type="text" class="textbox" placeholder="enter author" name="author" required>
+                <input type="text" class="textbox" placeholder="enter author" id="author" name="author" required>
 
                 <label for="pages"><b>number of pages</b></label>
-                <input type="text" class="textbox" placeholder="enter number of pages" name="pages" required>
+                <input type="text" class="textbox" placeholder="enter number of pages" id="pages" name="pages" required>
         
-                <label for="didRead"><b>completed?</b></label>
+                <label id="didRead"><b>completed?</b></label>
               
                 <div>
                     <input type="radio" id="yes" name="didRead" value="yes" required>
@@ -40,9 +40,9 @@
     </header>
     
     <div id="shelf"></div>
-    
-    
-</body>
+
     <script src="library.js"></script>
     <script src="main.js"></script>
+</body>
+
 </html>
