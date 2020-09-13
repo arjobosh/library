@@ -26,8 +26,6 @@ body {
     margin: auto 5%;
 }
 
-
-
 #book-form {
     display: none;
     position: fixed;
@@ -35,8 +33,7 @@ body {
     right: 0;
     margin: 0 10px;
     z-index: 1;
-    background-color: lightblue;
-    /* text-align: right; */
+    background-color: rgba(173, 216, 230, 0.9);
     width: 200px;
     height: 300px;
     border: 1px solid black;
@@ -45,11 +42,10 @@ body {
 
 #add-book-form > * {
     display: block;
-    margin: 10px;
+    margin: 5px;
 }
 
 #add-book-form .textbox {
-    /* text-align: right; */
     width: 75%;
 }
 
@@ -98,13 +94,14 @@ header {
 #shelf .card {
     width: 200px;
     height: 300px;
-    background-color: lightsalmon;
+    background-color: rgb(255, 251, 184, 0.7);
     border: 1px solid black;
     margin: 10px;
     text-align: center;
     display: flex;
     flex-flow: column wrap;
     justify-content: space-around;
+    box-shadow: 5px 5px whitesmoke;
 }
 
 #shelf .card .title {
@@ -116,7 +113,12 @@ header {
     font-style: italic;
 }
 
-#shelf .card .book-card-btn {
+#shelf .card .book-card {
     width: 40%;
     align-self: center;
+}
+
+.btn {
+    border-radius: 7px;
+    box-shadow: 2px 2px #333;
 }

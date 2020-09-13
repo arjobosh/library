@@ -26,9 +26,10 @@ Book.prototype.createBookCard = function() {
         this.addInfoToCard(x[i], card);
     }
 
-    card.appendChild(this.createBtn('toggle'));
+    card.querySelector('p.readStatus').appendChild(this.createBtn('toggle'));
+    //card.appendChild(this.createBtn('toggle'));
     card.appendChild(this.createBtn('remove'));
-
+    
     shelf.appendChild(card);
     this.bookCard = card;
 }
@@ -42,13 +43,16 @@ Book.prototype.addInfoToCard = function(property, card) {
     }
     else if (property === 'readStatus') {
         p.className = 'readStatus';
-         
+        p.style.display = 'flex';
+        p.style.alignItems = 'center';
+        p.style.justifyContent = 'center';
+        
         if (this[property]) {
-            p.style.color = 'green';
+            p.style.color = 'darkgreen';
             p.innerHTML = 'completed';
         }
         else {
-            p.style.color = 'red';
+            p.style.color = 'darkred';
             p.innerHTML = 'uncompleted'
         }
     }
@@ -60,20 +64,30 @@ Book.prototype.addInfoToCard = function(property, card) {
     return card.appendChild(p);
 }
 
-Book.prototype.removeBookFromLibrary = function() {
-    return theLibrary.splice(theLibrary.indexOf(this), 1);
-}
-
 Book.prototype.createBtn = function (btnValue) {
     let btn = document.createElement('input');
     let thisBook = this;
     
+    if (btnValue === 'toggle') {
+        btn.value = '';
+        btn.style.width = '20px';
+    }
+    else if (btnValue === 'remove') {
+        btn.value = btnValue;
+        btn.style.backgroundColor = 'rgba(255, 61, 61, 0.9)';
+        btn.style.border = '1px solid black';
+    }
+    else {
+        // other button type
+    }
+
     btn.type = 'button';
-    btn.value = btnValue;
-    btn.className = 'book-card-btn';
+    btn.className = 'book-card btn';
+    
+    btn.style.margin = '0 5px';
 
     btn.addEventListener('click', function() {
-        if (btn.value === 'remove') {
+        if (btnValue == 'remove') {
             let bookIndex = thisBook.bookCard.getAttribute('data-index');
             let bookNode = document.querySelector(`.card[data-index='${bookIndex}']`);
             
@@ -81,7 +95,7 @@ Book.prototype.createBtn = function (btnValue) {
             
             theLibrary.splice(theLibrary.indexOf(thisBook), 1);
         }
-        else if (btn.value === 'toggle') {
+        else if (btnValue == 'toggle') {
             thisBook.toggleReadStatus();
             thisBook.setReadStatusText();
         }
@@ -100,14 +114,18 @@ Book.prototype.toggleReadStatus = function() {
 }
 
 Book.prototype.setReadStatusText = function () {
+    let readStatusNode = this.bookCard.querySelector('p.readStatus');
+
     if (this.getReadStatus()) {
-        this.bookCard.querySelector('p.readStatus').style.color = 'green';
-        this.bookCard.querySelector('p.readStatus').innerHTML = 'completed'
+        readStatusNode.style.color = 'darkgreen';
+        readStatusNode.innerHTML = 'completed';
     }
     else {
-        this.bookCard.querySelector('p.readStatus').style.color = 'red';
-        this.bookCard.querySelector('p.readStatus').innerHTML = 'uncompleted';
+        readStatusNode.style.color = 'darkred';
+        readStatusNode.innerHTML = 'uncompleted';
     }
+
+    readStatusNode.appendChild(this.createBtn('toggle'));
 }
 
 Book.prototype.getReadStatus = function() {
@@ -116,6 +134,10 @@ Book.prototype.getReadStatus = function() {
 
 Book.prototype.getBookCard = function() {
     return document.querySelector(`[data-index="${theLibrary.indexOf(this)}"]`);
+}
+
+Book.prototype.removeBookFromLibrary = function() {
+    return theLibrary.splice(theLibrary.indexOf(this), 1);
 }
 
 Book.prototype.isInLibrary = function() {
@@ -162,7 +184,7 @@ function addBookButton() {
 
     if (!info.includes('')) {
         let b = new Book(info[0], info[1], info[2], info[3]);
-        console.log(b.addToLibrary());
+        b.addToLibrary();
     }
     else {
         //console.error('at least one of the fields is empty');
@@ -175,5 +197,5 @@ function addBookButton() {
 function openBookForm() {
     document.getElementById('book-form').style.display = 'block';
     document.getElementById('add-btn').style.display = 'none';
-    //document.getElementById('add-book-form').reset();
+    document.getElementById('add-book-form').reset();
 }
