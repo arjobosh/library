@@ -4,7 +4,168 @@
 const theLibrary = [];
 const shelf = document.getElementById('shelf');
 
-// book constructor
+function printLibrary() {
+    theLibrary.forEach(book => {
+        console.log(book);
+    });
+}
+
+
+// class implementation
+class Book {    
+    constructor(title, author, pages, readStatus) {
+        this.meta = { title, author, pages, readStatus };
+    }
+
+    get info() {
+        return this.meta.title + ' by ' + 
+            this.meta.author + ', ' + 
+            this.meta.pages + ' pages, ' + 
+            (this.meta.readStatus ? 'read' : 'not read');
+    }
+
+    createBookCard() {
+        let card = document.createElement('div');
+        card.className = 'card';
+        card.setAttribute('data-index', theLibrary.indexOf(this));
+    
+        for(let key in this.meta) {
+            //console.log(this.meta[key]);
+            this.addInfoToCard(key, card)
+        }
+    
+        card.querySelector('span.readStatus').appendChild(this.createBtn('toggle'));
+        card.appendChild(this.createBtn('remove'));
+        
+        shelf.appendChild(card);
+        // add bookCard property
+        this.bookCard = card;
+    }
+
+    addInfoToCard(property, card) {
+        let detail = document.createElement('span');
+
+        if (property === 'pages') {
+            detail.className = property;
+            detail.innerHTML = this.meta[property] + ' pages';
+        }
+        else if (property === 'readStatus') {
+            detail.className = 'readStatus';
+            
+            if (this.meta[property]) {
+                detail.style.color = 'darkgreen';
+                detail.innerHTML = 'completed';
+            }
+            else {
+                detail.style.color = 'darkred';
+                detail.innerHTML = 'uncompleted'
+            }
+        }
+        else {
+            detail.className = property;
+            detail.innerHTML = this.meta[property];
+        }
+    
+        return card.appendChild(detail);
+    }
+
+    createBtn(btnValue) {
+        let btn = document.createElement('input');
+        let thisBook = this;
+        
+        if (btnValue === 'toggle') {
+            btn.value = '';
+            btn.style.width = '20px';
+            btn.style.borderRadius = '50%';
+        }
+        else if (btnValue === 'remove') {
+            btn.value = btnValue;
+            btn.style.backgroundColor = 'rgba(255, 61, 61, 0.9)';
+            btn.style.border = '1px solid black';
+        }
+        else {
+            // other button type
+        }
+    
+        btn.type = 'button';
+        btn.className = 'book-card btn';
+        
+        btn.style.margin = '0 5px';
+    
+        btn.addEventListener('click', function() {
+            if (btnValue == 'remove') {
+                let bookIndex = thisBook.bookCard.getAttribute('data-index');
+                let bookNode = document.querySelector(`.card[data-index='${bookIndex}']`);
+                
+                document.querySelector('.card').parentNode.removeChild(bookNode);
+                
+                theLibrary.splice(theLibrary.indexOf(thisBook), 1);
+            }
+            else if (btnValue == 'toggle') {
+                thisBook.toggleReadStatus();
+                thisBook.setReadStatusText();
+            }
+            else {
+                console.error('no function for input type');
+            }
+    
+            //console.log(theLibrary);
+        });
+    
+        return btn;
+    }
+
+    toggleReadStatus() {
+        this.meta.readStatus = !this.meta.readStatus;
+    }
+
+    setReadStatusText() {
+        let readStatusNode = this.bookCard.querySelector('span.readStatus');
+    
+        if (this.getReadStatus()) {
+            readStatusNode.style.color = 'darkgreen';
+            readStatusNode.innerHTML = 'completed';
+        }
+        else {
+            readStatusNode.style.color = 'darkred';
+            readStatusNode.innerHTML = 'uncompleted';
+        }
+    
+        readStatusNode.appendChild(this.createBtn('toggle'));
+    }
+
+    getReadStatus() {
+        return this.meta.readStatus;
+    }
+    
+    getBookCard() {
+        return document.querySelector(`[data-index="${theLibrary.indexOf(this)}"]`);
+    }
+    
+    removeBookFromLibrary() {
+        return theLibrary.splice(theLibrary.indexOf(this), 1);
+    }
+    
+    isInLibrary() {
+        return theLibrary.includes(this);
+    }
+    
+    addToLibrary() {
+        if (!this.isInLibrary()) {
+            theLibrary.push(this);
+            this.createBookCard();
+        }
+        else {
+            console.error('this book is already in the library!');
+        }
+    
+        return this;
+    }
+}
+
+
+/*** pure function implementation of book object
+
 function Book(title, author, pages, readStatus) {
     this.title = title;
     this.author = author;
@@ -152,12 +313,7 @@ Book.prototype.addToLibrary = function() {
 
     return this;
 }
-
-function printLibrary() {
-    theLibrary.forEach(book => {
-        console.log(book);
-    });
-}
+***/
 
 //-----------------------------------------------/
 // DOM manipulation functions
